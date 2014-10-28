@@ -1,12 +1,12 @@
 
-#ifndef MAIN_H
-#define MAIN_H
+#ifndef MAIN_HPP
+#define MAIN_HPP
 
 
 /*Included headers*/
 /*---------------------------------------------*/
-#include "errorlogger.h"
 #include "alg.hpp"
+#include "errorlogger.h"
 /*---------------------------------------------*/
 
 /*Included dependencies*/
