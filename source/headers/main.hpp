@@ -15,7 +15,7 @@
 #include <iostream>
 #include <SDL2/SDL.h>
 #include <fstream>
-#include <time.h>
+#include <unistd.h>
 /*---------------------------------------------*/
 
 /*Header content*/

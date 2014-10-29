@@ -33,12 +33,17 @@ int main(int argc, char** argv){
 
 	for(int i = 0; i < EMconsts::iterations; i++){
 		emalg.run_algorithm(EMconsts::algiterations);
+		std::cout << "Iteration: " << i+1 << " ======================================\n";
 		emalg.present_state(ren);
+		std::cout << std::endl;
+
 		pollevent(done);
 
+		SDL_RenderPresent(ren);
 		if(done){
 			break;
 		}
+		usleep(EMconsts::iterationdelay);
 	}
 
 	waitForEvent();

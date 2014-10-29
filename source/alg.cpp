@@ -2,10 +2,6 @@
 
 
 
-void Mixture_of_gaussian::present_state(SDL_Renderer* ren){
-	std::cout << "Expected value of the first gaussian :" << current_h.means[0] << "\n" << "Expected value of the second gaussian :" << current_h.means[1] << std::endl;
-}
-
 void Mixture_of_gaussian::estimate_Z(){
 	for(std::vector<Datapoint>::iterator it = Y.begin(); it != Y.end(); ++it){
 		float numerator1 = exp(-0.5 * (pow(((*it).value - current_h.means[0]),2)));
@@ -38,6 +34,92 @@ Means Mixture_of_gaussian::maximation_step(){
 
 	return Means(z1_numerator_sum/z1_denominator_sum, z2_numerator_sum/z2_denominator_sum);
 	
+}
+
+void Mixture_of_gaussian::present_state(SDL_Renderer* ren){
+	std::cout << "Expected value of the first gaussian mean :" << current_h.means[0] << "\n" << "Expected value of the second gaussian mean :" << current_h.means[1] << std::endl;
+	int block = EMconsts::windowlength/EMconsts::scale;
+	SDL_SetRenderDrawColor(ren, 
+						EMconsts::emptycolor[0], 
+						EMconsts::emptycolor[1], 
+						EMconsts::emptycolor[2], 255);
+	SDL_RenderClear(ren);
+
+	SDL_SetRenderDrawColor(ren, 
+						EMconsts::linecolor[0], 
+						EMconsts::linecolor[1], 
+						EMconsts::linecolor[2], 255);
+
+	SDL_RenderDrawLine(ren,
+						0,
+						EMconsts::windowheight - block,
+						EMconsts::windowlength,
+						EMconsts::windowheight - block);
+
+	SDL_SetRenderDrawColor(ren, 
+						EMconsts::pointcolor[0], 
+						EMconsts::pointcolor[1], 
+						EMconsts::pointcolor[2], 255);
+
+	for(std::vector<Datapoint>::iterator it = Y.begin(); it != Y.end(); ++it){
+		SDL_RenderDrawLine(ren,
+						(*it).value*block + EMconsts::offset - EMconsts::pointsize,
+						EMconsts::windowheight - block - EMconsts::pointsize,
+						(*it).value*block + EMconsts::offset + EMconsts::pointsize,
+						EMconsts::windowheight - block + EMconsts::pointsize);
+		SDL_RenderDrawLine(ren,
+						(*it).value*block + EMconsts::offset - EMconsts::pointsize,
+						EMconsts::windowheight - block + EMconsts::pointsize,
+						(*it).value*block + EMconsts::offset + EMconsts::pointsize,
+						EMconsts::windowheight - block - EMconsts::pointsize);
+	}
+
+	SDL_SetRenderDrawColor(ren, 
+						EMconsts::meancolor[0], 
+						EMconsts::meancolor[1], 
+						EMconsts::meancolor[2], 255);
+	
+	SDL_RenderDrawLine(ren,
+						current_h.means[0] * block + EMconsts::offset,
+						EMconsts::windowheight - block,
+						current_h.means[0] * block + EMconsts::offset,
+						EMconsts::windowheight - 2*block);
+	SDL_RenderDrawLine(ren,
+						current_h.means[0] * block + EMconsts::offset + EMconsts::variancedummy,
+						(EMconsts::windowheight - block),
+						current_h.means[0] * block + EMconsts::offset,
+						(EMconsts::windowheight - 2*block));
+	SDL_RenderDrawLine(ren,
+						current_h.means[0] * block + EMconsts::offset - EMconsts::variancedummy,
+						(EMconsts::windowheight - block),
+						current_h.means[0] * block + EMconsts::offset,
+						(EMconsts::windowheight - 2*block));
+
+	SDL_RenderDrawLine(ren,
+						current_h.means[1] * block + EMconsts::offset,
+						EMconsts::windowheight - block,
+						current_h.means[1] * block + EMconsts::offset,
+						EMconsts::windowheight - 2*block);
+	SDL_RenderDrawLine(ren,
+						current_h.means[1] * block + EMconsts::offset + EMconsts::variancedummy,
+						EMconsts::windowheight - block,
+						current_h.means[1] * block + EMconsts::offset,
+						EMconsts::windowheight - 2*block);
+	SDL_RenderDrawLine(ren,
+						current_h.means[1] * block + EMconsts::offset - EMconsts::variancedummy,
+						EMconsts::windowheight - block,
+						current_h.means[1] * block + EMconsts::offset,
+						EMconsts::windowheight - 2*block);
+
+	SDL_SetRenderDrawColor(ren, 
+						EMconsts::zerocolor[0], 
+						EMconsts::zerocolor[1], 
+						EMconsts::zerocolor[2], 255);
+	SDL_RenderDrawLine(ren,
+						EMconsts::offset,
+						EMconsts::windowheight,
+						EMconsts::offset,
+						0);
 }
 
 /*Constructor definitions----------------------------*/
@@ -74,9 +156,7 @@ Mixture_of_gaussian::Mixture_of_gaussian(const Means& initmeans, const char* fil
 	float line;
 	std::ifstream data (filename);
 	if(!data.is_open()){
-		
-		/* Todo:: Why on the flying fuck does this shit not work!!!!fffffffffffffffffffffffffffffffffffffuuuuuuuuuu */
-		//errorlogger("Failed to open data file!");
+		errorlogger("Failed to open data file!");
 		std::cout << "Failed to open data file!\n";
 		exit(1);
 	}

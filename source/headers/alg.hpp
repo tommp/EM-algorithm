@@ -24,9 +24,20 @@
 namespace EMconsts{
 	const int iterations = 10;
 	const int algiterations = 1;
+	const int iterationdelay = 200000;
 
-	const int windowlength = 600;
+	const int windowlength = 1300;
 	const int windowheight = 600;
+	const int scale = 10;
+	const int offset = windowlength / 3;
+	const int pointsize = 5;
+	const int variancedummy = 150;
+
+	const int emptycolor[] = {0, 0, 0}; 
+	const int linecolor[] = {0, 255, 0}; 
+	const int pointcolor[] = {0, 0, 255};
+	const int meancolor[] = {255, 0, 0};  
+	const int zerocolor[] = {255, 255, 255};
 }
 
 class Mixture_of_gaussian;
