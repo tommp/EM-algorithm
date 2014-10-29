@@ -5,8 +5,8 @@
 
 /*Included headers*/
 /*---------------------------------------------*/
+#include "errorlogger.hpp"
 #include "alg.hpp"
-#include "errorlogger.h"
 /*---------------------------------------------*/
 
 /*Included dependencies*/
@@ -20,7 +20,9 @@
 
 /*Header content*/
 /*=============================================*/
+void pollevent(bool& var);
 
+void waitForEvent();
 /*=============================================*/
 
 #endif

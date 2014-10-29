@@ -1,6 +1,6 @@
 
-#ifndef ERRORLOGGER_H
-#define ERRORLOGGER_H
+#ifndef ERRORLOGGER_HPP
+#define ERRORLOGGER_HPP
 
 
 /*Included headers*/
