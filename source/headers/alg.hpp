@@ -41,7 +41,7 @@ class EM_algorithm {
 		Hypothesis current_h;
 
 		/* The current data (state) of the algorithm. */
-		/* For example Y[1] should contain X[1] (the known data) and Z[1] (the unknown data) of the second point (0 indexing). */
+		/* For example Y[1] should contain X (the known data) and Z (the unknown data) of the second point (0 indexing). */
 		std::vector<Datatype> Y;
 
 	public:
@@ -124,7 +124,6 @@ class Mixture_of_gaussian: public EM_algorithm<Means, Datapoint> {
 		/* Constructors */
 		Mixture_of_gaussian();
 		Mixture_of_gaussian(const Means& initmeans, const char* filename);
-
 };
 
 /*=============================================*/
